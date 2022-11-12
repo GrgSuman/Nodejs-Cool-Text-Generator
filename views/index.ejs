@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool text generators</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <style>
+
+  
+
+    </style>
+</head>
+
+<body>
+<div class="top_search">
+  <form action="" class="sendText">
+   <input type="text" placeholder="Enter text">
+   <button>Generate</button>
+ </form>
+</div>
+ 
+<h1 class="loading">
+  <span> Preparing best for you</span>
+  <div class="spinner">
+   <div class="bounce1"></div>
+   <div class="bounce2"></div>
+   <div class="bounce3"></div>
+ </div>
+ </h1>
+
+ <div class="container">
+ </div>
+
+ <script>
+   document.querySelector(".sendText").addEventListener('submit',(e)=>{
+     e.preventDefault()
+     let name = document.querySelector(".sendText input").value
+     document.querySelector(".sendText input").value=""
+     if(name){
+          document.querySelector('.container').innerHTML=""
+          document.querySelector(".loading").style.display="flex"
+          let newArr = []
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: name })
+        };
+        fetch('/freefire-name', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+            document.querySelector(".loading").style.display="none"
+              data?.coolNames.map((x)=>{
+                if([...x].includes('ꪊ')||[...x].includes('᭄')){
+                  console.log(x)
+                }
+                else{
+                let section = document.createElement('section')
+                section.setAttribute('data-name',x)
+                section.textContent = x
+                document.querySelector('.container').appendChild(section)
+                }
+              })
+            });
+
+          
+          }
+     
+   })
+   
+ </script>
+</body>
+</html>
